@@ -1,95 +1,81 @@
 import sys
 sys.path.append('../')
-from message import general_message 
+from message import general_message
 
 """
-    Cree una clase llamada Producto, con su nombre, precio unitario y cantidad.
-    Genere el IVA de ser necesario y calcule el total de la venta de dicho producto.
-
-    Haga una lista de productos y muestrelos como si fuese una factura. Es decir, 
-    con su fecha y hora, su precio unitario, y un total de factura.
+    Cree una clase que realice operaciones basicas (suma, resta, multiplicacion,
+    division) y que realice los dichas funciones a partir de pasarle una lista
+    de numeros. Es decir, si se le pasa 5 numeros, el objeto instanciado debera
+    calcular las operaciens bassicas con cada numero de la lista.
 """
-import datetime
 
-class Product:
-    def __init__(self, name, unit_price, quantity):
-        self.__name = name
-        self.__unit_price = unit_price
-        self.__quantity = quantity
-        self.__total = self.__calculate_total()  
-    
+class Calculator:
+    def __init__(self, numbers):
+        self.__numbers = numbers
+        self.__sum_numbers = 0
+        self.__subtraction_numbers = 0
+        self.__multiplication_numbers = 0
+        self.__division_numbers = 0
+        
     
     # Methods
-    # generate IVA
-    #   arg: price to get IVA, it is assumed that IVA's value is 12%
-    #   return: price  with IVA include
-    def generate_IVA(self, price):
-        return price * 0.12
-    
-    def __calculate_total(self):
-        return self.__unit_price * self.__quantity 
-    
-    
-    # Getters and setters
-    # For name
-    def get_name(self):
-        return self.__name
-    def set_name(self, name):
-        self.__name = name
-    
-    # For unit_price
-    def get_unit_price(self):
-        return self.__unit_price
-    def set_unit_price(self, unit_price):
-        self.__unit_price = unit_price
-    
-    # For quantity
-    def get_quantity(self):
-        return self.__quantity
-    def set_quantity(self, quantity):
-        self.__quantity = quantity
-    
-    def get_total(self):
-        return self.__total
+    # sum
+    def __sum(self):
+       self.__sum_numbers = sum(self.__numbers)
+        
+    # subrtaction
+    def __subtraction(self):
+        r = self.__numbers[0]
+        for n in self.__numbers[1:]:
+            r = r - n
+        self.__subtraction_numbers = r
 
-
-
- 
-if __name__ == "__main__":
-    general_message()
-
-    # Objects intantiacion
-    product_list = [
-        Product("Pasta dental Colgate", 3.40, 2),
-        Product("Mentol chino", 2.50, 1),
-        Product("Cereal Chocapic", 5.25, 3),
-        Product("Cerveza Pilsener", 3.40, 5),
-        Product("Cepillo de dientes Oral-B", 3.40, 1),
-        Product("Atun Real", 1.90, 3)
-    ]
-
-    print("Factura N1.")
-
-    today = datetime.datetime.now()
-    today = today.strftime("%Y/%m/%d a las %H:%M")
-    subtotal = 0
-    print("\tFecha: ", today)
-
-    for product in product_list:
-        if len(product.get_name()) > 20:
-            print("\n", product.get_name()[0:20], end="\t")
+    # multiplication
+    def __multiplication(self):
+        r = self.__numbers[0]
+        for n in self.__numbers[1:]:
+            r = r * n 
+        self.__multiplication_numbers = r 
+     
+    # division
+    def __division(self):
+        r = 0
+        if not 0 in self.__numbers:
+            r = self.__numbers[0]
+            for n in self.__numbers[1:]:
+	            r = r / n
         else:
-            product_name = product.get_name()
-            while( len(product_name) <= 20 ):
-               product_name = product_name + ' '     
-            print("\n", product_name, end="\t")
+            print("It is not possible to divide a set that has null elements (zeros)")
+        self.__division_numbers = r 
+    
+    def get_summarize(self):
+        self.__sum()
+        self.__subtraction()
+        self.__multiplication()
+        self.__division()
+        return """
+                Suma: {0:.2f},
+                Resta: {1:.2f},
+                Multiplicacion: {2:.2f},
+                Division: {3:.5f}
+            """.format(
+                self.__sum_numbers,
+                self.__subtraction_numbers,
+                self.__multiplication_numbers,
+                self.__division_numbers
+            ) 
+    
+    # Getters and Setters
+    def get_numbers(self):
+        return self.__numbers
+    def set_numbers(self, numbers):
+        self.__numbers = numbers 
 
-        print('{0:.2f}'.format(product.get_unit_price()), end="\t")
-        print(product.get_quantity(), end="\t")
-        print('{0:.2f}'.format(product.get_total()))    
-        subtotal = product.get_total() + subtotal
 
-    print("\t\t\t     Subtotal: {0:.2f}".format(subtotal))
-    subtotal_IVA = Product.generate_IVA(product_list.pop(), subtotal) 
-    print("\t\t\t     IVA(12%): {0:.2f}".format(subtotal_IVA))
-    print("\t\t\t     TOTAL:    {0:.2f}".format(subtotal + subtotal_IVA))
+
+if __name__ == "__main__":
+    general_message() 
+
+    calculator = Calculator([10,23,11,1,33])
+    
+    print(calculator.get_summarize())

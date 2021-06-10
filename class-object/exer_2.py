@@ -3,107 +3,92 @@ sys.path.append('../')
 from message import general_message 
 
 """
-    Cree una clase llamada Animales, con atributos de nombre, tipo (Gato, Chimpace, Pez, etc.), 
-    si es vertebrado o no, fecha de nacimiento y edad.
-    
-    La edad debe sobreentenderse a partir de la fecha de nacimiento.
-    La clase debe poseer getters y setters.
-    
-    Debe hacer una lista de objetos de tipo animal, a parir de la entrada en consola.
-    Despues, muestre a lodos los animales en order de edades (del menor al mayor).
+    Cree una clase llamada Producto, con su nombre, precio unitario y cantidad.
+    Genere el IVA de ser necesario y calcule el total de la venta de dicho producto.
+
+    Haga una lista de productos y muestrelos como si fuese una factura. Es decir, 
+    con su fecha y hora, su precio unitario, y un total de factura.
 """
 import datetime
 
-
-class Animal:
-    __age = int(0)
-    def __init__(self, name, type_, is_vertebrate, birth_date):
+class Product:
+    def __init__(self, name, unit_price, quantity):
         self.__name = name
-        self.__type = type_
-        self.__is_vertebrate = is_vertebrate
-        self.__birth_date = self.__str_to_datetime(birth_date)
-        self.__calculate_age()  # To calculate age of animal 
-   
-    # Methods
-    # For calculate age of the animal 
-    def __calculate_age(self):
-        days_in_year = 365.2425
-         
-        self.__age = int((
-                (datetime.date.today() - self.__birth_date).days / days_in_year
-            ))     
-        
-    def __str_to_datetime(self, str_):
-        return datetime.datetime.strptime(str_, "%Y/%m/%d").date() 
+        self.__unit_price = unit_price
+        self.__quantity = quantity
+        self.__total = self.__calculate_total()  
     
-    # Getters an setters    
+    
+    # Methods
+    # generate IVA
+    #   arg: price to get IVA, it is assumed that IVA's value is 12%
+    #   return: price  with IVA include
+    def generate_IVA(self, price):
+        return price * 0.12
+    
+    def __calculate_total(self):
+        return self.__unit_price * self.__quantity 
+    
+    
+    # Getters and setters
     # For name
     def get_name(self):
         return self.__name
     def set_name(self, name):
-        self.__name = name  
+        self.__name = name
     
-    # For type
-    def get_type(self):
-        return self.__type
-    def set_type(self, type_):
-        self.__type = type_  
-
-    # For is vertebrate
-    def is_vertebrate(self):
-        return self.__is_vertebrate
-    # The set method to change if is vertebrate or not, doesn't correspond to real life.
-    # But, for this exercise, this aproach will be discard.
-    def set_is_vertebrate(self, is_vertebrate):
-        self.__is_vertebrate = is_vertebrate
-
-    # For birth date 
-    def get_birth_date(self):
-        return self.__birth_date
-    # The set method to change birth date, doesn't correspond to real life a priori.
-    # But, for this exercise, this aproach will be discard.   
-    def set_birth_date(self, birth_date):
-        self.__birth_date = self.__str_to_datetime(birth_date) 
-        self.__calculate_age()
+    # For unit_price
+    def get_unit_price(self):
+        return self.__unit_price
+    def set_unit_price(self, unit_price):
+        self.__unit_price = unit_price
     
-    # For age
-    def get_age(self):
-        return self.__age 
+    # For quantity
+    def get_quantity(self):
+        return self.__quantity
+    def set_quantity(self, quantity):
+        self.__quantity = quantity
+    
+    def get_total(self):
+        return self.__total
 
 
+ 
 if __name__ == "__main__":
     general_message()
 
-    # Objects instantiation
-    # data entry
-    print("Ingreso de datos de cada animal.")
-    animal_list = [] 
+    # Objects intantiacion
+    product_list = [
+        Product("Pasta dental Colgate", 3.40, 2),
+        Product("Mentol chino", 2.50, 1),
+        Product("Cereal Chocapic", 5.25, 3),
+        Product("Cerveza Pilsener", 3.40, 5),
+        Product("Cepillo de dientes Oral-B", 3.40, 1),
+        Product("Atun Real", 1.90, 3)
+    ]
 
-    while True:
-        print("\nAnimal #", (len(animal_list) + 1))
+    print("Factura N1.")
 
-        name = str(input("\tNombre: "))
-        type_ = str(input("\tTipo(Gato, Chimpace, Pez, etc.): "))
-        is_vertebrate = True if str(input("\tEs un animal vertebrado [y/n]: ")) == 'y' else False
-        birth_date = str(input("\tFecha de nacimiento (yyyy/mm/dd): ")) 
-        
-        animal = Animal(name, type_, is_vertebrate, birth_date)
+    today = datetime.datetime.now()
+    today = today.strftime("%Y/%m/%d a las %H:%M")
+    subtotal = 0
+    print("\tFecha: ", today)
 
-        animal_list.append(animal)        
-        
-        stay_in_loop = True if str(input("\t\tDesea seguir ingresando animales? [y/n]: ")) == 'y' else False
-       
-        if not stay_in_loop:
-            break 
-    
-    print("\nLos datos ingresados, con edades del menor al mayor, son:") 
-    animal_list.sort(key=lambda x: x.get_age())
+    for product in product_list:
+        if len(product.get_name()) > 20:
+            print("\n", product.get_name()[0:20], end="\t")
+        else:
+            product_name = product.get_name()
+            while( len(product_name) <= 20 ):
+               product_name = product_name + ' '     
+            print("\n", product_name, end="\t")
 
-    for (animal, i) in zip(animal_list, range(0, len(animal_list))):
-        print("\nAnimal ", (i+1)) 
-        print("\tNombre:", animal.get_name())
-        print("\tTipo:", animal.get_type())
-        print("\tEs vertebrado?:", "Si" if animal.is_vertebrate() else "No")
-        print("\tFecha de nacimiento:", animal.get_birth_date())
-        print("\tEdad:", animal.get_age(), "años.")
+        print('{0:.2f}'.format(product.get_unit_price()), end="\t")
+        print(product.get_quantity(), end="\t")
+        print('{0:.2f}'.format(product.get_total()))    
+        subtotal = product.get_total() + subtotal
 
+    print("\t\t\t     Subtotal: {0:.2f}".format(subtotal))
+    subtotal_IVA = Product.generate_IVA(product_list.pop(), subtotal) 
+    print("\t\t\t     IVA(12%): {0:.2f}".format(subtotal_IVA))
+    print("\t\t\t     TOTAL:    {0:.2f}".format(subtotal + subtotal_IVA))

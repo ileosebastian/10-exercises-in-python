@@ -1,81 +1,108 @@
 import sys
 sys.path.append('../')
-from message import general_message
+from message import general_message 
 
 """
-    Cree una clase que realice operaciones basicas (suma, resta, multiplicacion,
-    division) y que realice los dichas funciones a partir de pasarle una lista
-    de numeros. Es decir, si se le pasa 5 numeros, el objeto instanciado debera
-    calcular las operaciens bassicas con cada numero de la lista.
-"""
-
-class Calculator:
-    def __init__(self, numbers):
-        self.__numbers = numbers
-        self.__sum_numbers = 0
-        self.__subtraction_numbers = 0
-        self.__multiplication_numbers = 0
-        self.__division_numbers = 0
-        
+    Cree una clase llamada Animales, con atributos de nombre, tipo (Gato, Chimpace, Pez, etc.), 
+    si es vertebrado o no, fecha de nacimiento y edad.
     
+    La edad debe sobreentenderse a partir de la fecha de nacimiento.
+    La clase debe poseer getters y setters.
+    
+    Debe hacer una lista de objetos de tipo animal, a parir de la entrada en consola.
+    Despues, muestre a lodos los animales en order de edades (del menor al mayor).
+"""
+import datetime
+
+
+class Animal:
+    __age = int(0)
+    def __init__(self, name, type_, is_vertebrate, birth_date):
+        self.__name = name
+        self.__type = type_
+        self.__is_vertebrate = is_vertebrate
+        self.__birth_date = self.__str_to_datetime(birth_date)
+        self.__calculate_age()  # To calculate age of animal 
+   
     # Methods
-    # sum
-    def __sum(self):
-       self.__sum_numbers = sum(self.__numbers)
+    # For calculate age of the animal 
+    def __calculate_age(self):
+        days_in_year = 365.2425
+         
+        self.__age = int((
+                (datetime.date.today() - self.__birth_date).days / days_in_year
+            ))     
         
-    # subrtaction
-    def __subtraction(self):
-        r = self.__numbers[0]
-        for n in self.__numbers[1:]:
-            r = r - n
-        self.__subtraction_numbers = r
-
-    # multiplication
-    def __multiplication(self):
-        r = self.__numbers[0]
-        for n in self.__numbers[1:]:
-            r = r * n 
-        self.__multiplication_numbers = r 
-     
-    # division
-    def __division(self):
-        r = 0
-        if not 0 in self.__numbers:
-            r = self.__numbers[0]
-            for n in self.__numbers[1:]:
-	            r = r / n
-        else:
-            print("It is not possible to divide a set that has null elements (zeros)")
-        self.__division_numbers = r 
+    def __str_to_datetime(self, str_):
+        return datetime.datetime.strptime(str_, "%Y/%m/%d").date() 
     
-    def get_summarize(self):
-        self.__sum()
-        self.__subtraction()
-        self.__multiplication()
-        self.__division()
-        return """
-                Suma: {0:.2f},
-                Resta: {1:.2f},
-                Multiplicacion: {2:.2f},
-                Division: {3:.5f}
-            """.format(
-                self.__sum_numbers,
-                self.__subtraction_numbers,
-                self.__multiplication_numbers,
-                self.__division_numbers
-            ) 
+    # Getters an setters    
+    # For name
+    def get_name(self):
+        return self.__name
+    def set_name(self, name):
+        self.__name = name  
     
-    # Getters and Setters
-    def get_numbers(self):
-        return self.__numbers
-    def set_numbers(self, numbers):
-        self.__numbers = numbers 
+    # For type
+    def get_type(self):
+        return self.__type
+    def set_type(self, type_):
+        self.__type = type_  
 
+    # For is vertebrate
+    def is_vertebrate(self):
+        return self.__is_vertebrate
+    # The set method to change if is vertebrate or not, doesn't correspond to real life.
+    # But, for this exercise, this aproach will be discard.
+    def set_is_vertebrate(self, is_vertebrate):
+        self.__is_vertebrate = is_vertebrate
+
+    # For birth date 
+    def get_birth_date(self):
+        return self.__birth_date
+    # The set method to change birth date, doesn't correspond to real life a priori.
+    # But, for this exercise, this aproach will be discard.   
+    def set_birth_date(self, birth_date):
+        self.__birth_date = self.__str_to_datetime(birth_date) 
+        self.__calculate_age()
+    
+    # For age
+    def get_age(self):
+        return self.__age 
 
 
 if __name__ == "__main__":
-    general_message() 
+    general_message()
 
-    calculator = Calculator([10,23,11,1,33])
+    # Objects instantiation
+    # data entry
+    print("Ingreso de datos de cada animal.")
+    animal_list = [] 
+
+    while True:
+        print("\nAnimal #", (len(animal_list) + 1))
+
+        name = str(input("\tNombre: "))
+        type_ = str(input("\tTipo(Gato, Chimpace, Pez, etc.): "))
+        is_vertebrate = True if str(input("\tEs un animal vertebrado [y/n]: ")) == 'y' else False
+        birth_date = str(input("\tFecha de nacimiento (yyyy/mm/dd): ")) 
+        
+        animal = Animal(name, type_, is_vertebrate, birth_date)
+
+        animal_list.append(animal)        
+        
+        stay_in_loop = True if str(input("\t\tDesea seguir ingresando animales? [y/n]: ")) == 'y' else False
+       
+        if not stay_in_loop:
+            break 
     
-    print(calculator.get_summarize())
+    print("\nLos datos ingresados, con edades del menor al mayor, son:") 
+    animal_list.sort(key=lambda x: x.get_age())
+
+    for (animal, i) in zip(animal_list, range(0, len(animal_list))):
+        print("\nAnimal ", (i+1)) 
+        print("\tNombre:", animal.get_name())
+        print("\tTipo:", animal.get_type())
+        print("\tEs vertebrado?:", "Si" if animal.is_vertebrate() else "No")
+        print("\tFecha de nacimiento:", animal.get_birth_date())
+        print("\tEdad:", animal.get_age(), "años.")

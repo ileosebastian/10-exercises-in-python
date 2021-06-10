@@ -7,6 +7,10 @@ from message import general_message
     division) y que realice los dichas funciones a partir de pasarle una lista
     de numeros. Es decir, si se le pasa 5 numeros, el objeto instanciado debera
     calcular las operaciens bassicas con cada numero de la lista.
+
+    Debe instanciar un objeto a partir de una lista de numeros. Luego, muestre 
+    la lista de numeros y luego un resumen de cada operacion hecha y su respectiva
+    solucion.
 """
 
 class Calculator:
@@ -76,6 +80,9 @@ class Calculator:
 if __name__ == "__main__":
     general_message() 
 
-    calculator = Calculator([10,23,11,1,33])
+    list_n = [10,23,11,1,33]
+    calculator = Calculator(list_n)
     
+    print("La lista de numeros a operar es: ", list_n)
+    print("\tLas operaciones basicas hechas sobre esta lista son los siguietes:")
     print(calculator.get_summarize())

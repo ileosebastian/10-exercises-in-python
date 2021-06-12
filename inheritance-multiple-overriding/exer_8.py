@@ -4,18 +4,9 @@ sys.path.append('../')
 from message import general_message 
 
 """
-    
+        
 """
-"""
-    # Methods
-    
-    
-    # Getter and setter
-    def get_(self):
-	    return self.__
-    def set_(self, value):
-	    self.__ = value
-"""
+
 class Person:
     def __init__(self, names):
         self.__fname = names

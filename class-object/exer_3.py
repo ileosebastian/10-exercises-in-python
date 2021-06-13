@@ -1,7 +1,6 @@
-import sys
-sys.path.append('c:/Users/ileos/Desktop/tarea-2')
-sys.path.append('../')
-from message import general_message 
+# import sys
+# sys.path.append('../')
+# from message import general_message 
 
 """
     Cree una clase llamada Vehiculo, la cual tenga como atributos la marca, la velocidad

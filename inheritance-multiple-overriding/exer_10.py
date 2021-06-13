@@ -1,7 +1,6 @@
-import sys
-sys.path.append('c:/Users/ileos/Desktop/tarea-2')
-sys.path.append('../')
-from message import general_message
+# import sys
+# sys.path.append('../')
+# from message import general_message
 
 """
     Cree una clase llmada SmartPhone, la cual debe tener una herencia multiple de
@@ -150,7 +149,7 @@ class SmartPhone(Camera, ManagerApp):
 
 
 if __name__ == "__main__":
-    general_message()
+    # general_message()
 
     apps_by_default = [
         ("WhatsApp", 22, "a12.0.13", "Es una app de mensajeria instantanea."),

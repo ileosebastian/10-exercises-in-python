@@ -1,7 +1,7 @@
-import sys
-sys.path.append('c:/Users/ileos/Desktop/tarea-2')
-sys.path.append('../')
-from message import general_message
+# import sys
+# sys.path.append('c:/Users/ileos/Desktop/tarea-2')
+# sys.path.append('../')
+# from message import general_message
 
 """
     Cree una clase que realice operaciones basicas (suma, resta, multiplicacion,

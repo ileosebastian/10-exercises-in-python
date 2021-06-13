@@ -1,7 +1,6 @@
-import sys
-sys.path.append('c:/Users/ileos/Desktop/tarea-2')
-sys.path.append('../')
-from message import general_message 
+# import sys
+# sys.path.append('../')
+# from message import general_message 
 
 """
     Crear una clase llamada Restaurante, la cual tenga atributos como: nombre y

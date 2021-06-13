@@ -1,4 +1,5 @@
 import sys
+sys.path.append('c:/Users/ileos/Desktop/tarea-2')
 sys.path.append('../')
 from message import general_message
 
@@ -78,7 +79,7 @@ class Calculator:
 
 
 if __name__ == "__main__":
-    general_message() 
+    # general_message() 
 
     list_n = [10,23,11,1,33]
     calculator = Calculator(list_n)

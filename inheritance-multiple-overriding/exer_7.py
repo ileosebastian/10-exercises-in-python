@@ -218,7 +218,7 @@ class Racecar(Vehicle):
 
 
 if __name__ == "__main__":
-    general_message() 
+    # general_message() 
 
     # For truck 
     carry_1 = [

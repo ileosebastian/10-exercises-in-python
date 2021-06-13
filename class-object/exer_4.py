@@ -1,4 +1,5 @@
 import sys
+sys.path.append('c:/Users/ileos/Desktop/tarea-2')
 sys.path.append('../')
 from message import general_message 
 
@@ -13,7 +14,6 @@ from message import general_message
     Despues, muestre a lodos los animales en order de edades (del menor al mayor).
 """
 import datetime
-
 
 class Animal:
     __age = int(0)
@@ -72,7 +72,7 @@ class Animal:
 
 
 if __name__ == "__main__":
-    general_message()
+    # general_message()
 
     # Objects instantiation
     # data entry

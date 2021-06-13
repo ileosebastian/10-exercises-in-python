@@ -1,4 +1,5 @@
 import sys
+sys.path.append('c:/Users/ileos/Desktop/tarea-2')
 sys.path.append('../')
 from message import general_message 
 
@@ -74,7 +75,7 @@ class Restaurant:
 
 
 if __name__ == "__main__":
-    general_message()
+    # general_message()
 
     # Objects Intantiation
     restaurant_1 = Restaurant("La carreta", "Ecuatoriana", "15:00", "20:00")

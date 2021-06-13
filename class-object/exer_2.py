@@ -1,4 +1,5 @@
 import sys
+sys.path.append('c:/Users/ileos/Desktop/tarea-2')
 sys.path.append('../')
 from message import general_message 
 
@@ -55,7 +56,7 @@ class Product:
 
  
 if __name__ == "__main__":
-    general_message()
+    # general_message()
 
     # Objects intantiacion
     product_list = [

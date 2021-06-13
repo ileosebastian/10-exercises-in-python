@@ -70,7 +70,7 @@ class Bat(Mammal, Bird):
 
 
 if __name__ == "__main__":
-    general_message()
+    # general_message()
 
     bat_1 = Bat(3)
 

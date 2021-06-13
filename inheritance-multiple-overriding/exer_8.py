@@ -141,7 +141,7 @@ class MultiFaceted(Person, Language, Boxing, Music):
 
 
 if __name__ == "__main__":
-    general_message()
+    # general_message()
     
     a_multi_faceted = MultiFaceted("Sherlock Holmes")
 
